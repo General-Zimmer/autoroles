@@ -1,0 +1,14 @@
+name: Autoroles
+author: General_Zimmer
+depend: [Essentials, LuckPerms]
+version: 0.5
+main: xyz.wisecraft.autoroles.Main
+commands:
+  autoroles:
+    description: Used to manually save or load data
+    usage: /autoroles <save | load>
+    permission: autoroles.manage
+    permission-message: You don't have the autoroles.manage permission node.
+permission:
+  autoroles.manage:
+    default: op
