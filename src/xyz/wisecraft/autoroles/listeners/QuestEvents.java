@@ -38,8 +38,7 @@ public class QuestEvents implements Listener {
 			
 			if (!prog.isDone())
 				prog.awardCriteria("tpr");
-					
-					
+			
 				}
 		else if (message.equalsIgnoreCase("/spawn")) {
 					
