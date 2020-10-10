@@ -64,13 +64,13 @@ public class Main extends JavaPlugin{
 						
 						int value = timers.getFly()-1;
 						timers.setFly(value);
-						Bukkit.getPlayer(values.getKey()).sendMessage(Integer.toString(value));
+						//Bukkit.getPlayer(values.getKey()).sendMessage(Integer.toString(value));
 					}
 					if (timers.getTree() > 0) {
 						
 						int value = timers.getTree()-1;
 						timers.setTree(value);
-						Bukkit.getPlayer(values.getKey()).sendMessage(Integer.toString(value));
+						//Bukkit.getPlayer(values.getKey()).sendMessage(Integer.toString(value));
 					}
 				}
 			}

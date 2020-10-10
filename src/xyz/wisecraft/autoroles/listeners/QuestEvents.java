@@ -85,7 +85,7 @@ public class QuestEvents implements Listener {
 			
 			e.setDeathMessage(p.getName() + " was crushed under a tree");
 			if (!prog.isDone())
-			prog.awardCriteria("dead");
+			prog.awardCriteria("move");
 		}
 		
 		}
@@ -105,14 +105,30 @@ public class QuestEvents implements Listener {
 		}
 	}
 	
-	
+	@EventHandler
 	public void treecounter(TreeFellEvent e) {
 		Player p = e.getPlayer();
 		UUID UUID = p.getUniqueId();
-		p.sendMessage("yes");
 		
-		int value = plugin.infom.get(UUID).getTrees();
-		plugin.infom.get(UUID).setTrees(value+1);
+
+		NamespacedKey key = new NamespacedKey(plugin, "timber");
+		Advancement a = Bukkit.getAdvancement(key);
+		AdvancementProgress prog = p.getAdvancementProgress(a); 
+		if (!prog.isDone())
+			prog.awardCriteria("tree");
+
+		
+		
+		int trees = plugin.infom.get(UUID).getTrees();
+		plugin.infom.get(UUID).setTrees(trees+1);
+		
+		if (trees+1 > 999) {
+			NamespacedKey key2 = new NamespacedKey(plugin, "lumberjack");
+			Advancement a2 = Bukkit.getAdvancement(key2);
+			AdvancementProgress prog2 = p.getAdvancementProgress(a2); 
+			if (!prog2.isDone())
+				prog.awardCriteria("tree1000");
+		}
 		
 		if (!timers.containsKey(UUID)) {
 			timers.put(UUID, new Timers(0, 3));

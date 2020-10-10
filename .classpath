@@ -6,7 +6,6 @@
 	<classpathentry kind="lib" path="C:/Users/Bruger/Minecraft server/plugins/LuckPerms-Bukkit-5.1.26.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Bruger/Minecraft server/BuildTools/Spigot/Spigot-API/target/spigot-api-1.16.3-R0.1-SNAPSHOT-shaded.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Bruger/Minecraft server/plugins/GriefPreventionFlags-5.9.2.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Bruger/Minecraft server/plugins/GriefPrevention.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Bruger/Minecraft server/plugins/UltimateTimber-2.0.9.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
