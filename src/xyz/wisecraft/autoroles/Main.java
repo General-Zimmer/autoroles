@@ -66,16 +66,13 @@ public class Main extends JavaPlugin{
 						timers.setFly(value);
 						Bukkit.getPlayer(values.getKey()).sendMessage(Integer.toString(value));
 					}
-					
 					if (timers.getTree() > 0) {
 						
 						int value = timers.getTree()-1;
 						timers.setTree(value);
 						Bukkit.getPlayer(values.getKey()).sendMessage(Integer.toString(value));
 					}
-					
 				}
-				
 			}
 		}.runTaskTimerAsynchronously(Main.getPlugin(Main.class), 20, 20);
 		
