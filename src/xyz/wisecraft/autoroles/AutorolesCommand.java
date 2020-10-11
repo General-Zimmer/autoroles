@@ -4,7 +4,6 @@ import java.io.File;
 import java.util.Map.Entry;
 import java.util.UUID;
 
-import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -19,9 +18,6 @@ public class AutorolesCommand implements CommandExecutor {
 	
 	private static Main plugin = Main.getPlugin(Main.class);
 	
-	public AutorolesCommand(Main main) {
-		
-	}
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
@@ -31,10 +27,8 @@ public class AutorolesCommand implements CommandExecutor {
 			switch(args[0]) {
 			case "save":
 				
-				new autosave().runTask(plugin);
+				new autosave(sender).runTask(plugin);
 		    	
-				plugin.console.sendMessage("Manuel: Data saved by " + sender.getName());
-				sender.sendMessage(ChatColor.GREEN + "Data has been saved");
 				
 				return true;
 			case "load":

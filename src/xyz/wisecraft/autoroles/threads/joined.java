@@ -8,9 +8,15 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.UUID;
 
+import org.bukkit.Bukkit;
+import org.bukkit.NamespacedKey;
+import org.bukkit.advancement.Advancement;
+import org.bukkit.advancement.AdvancementProgress;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import net.luckperms.api.model.group.Group;
 import xyz.wisecraft.autoroles.Main;
 import xyz.wisecraft.autoroles.data.DataMethods;
 import xyz.wisecraft.autoroles.data.Playerdata;
@@ -67,15 +73,61 @@ public class joined extends BukkitRunnable {
 
 		// Check if the name in the config is the same as the player's current name, if not, correct it. 
 		FileConfiguration config = Playerdata.getConfig(file, uuid); 	
-		if (config.getString("Name") != name) {
+		if (config.getString("Name").equals(name)) {
     		config.set("Name", name);
 		}
 		
-   	 	new SavingConfig(file).runTask(plugin);
-   	 	
-		// Add joined player to infop ConcurrentHashMap
-		Object[] data = {config.getString("Name"), config.getInt("BlocksBroke"), config.getInt("BlocksPlace"), config.getInt("DiaBroke"), config.getInt("Time"), config.getInt("Timber")};
-		DataMethods.infopPut(UUID, data);
+		
+		// Give old timers their achievement
+		if (config.getString("oldtimer").equalsIgnoreCase("new")) {
+		new BukkitRunnable() {
+			public void run() {
+				
+				
+				
+				Player p = Bukkit.getPlayer(UUID);
+				Group group = Main.luck.getGroupManager().getGroup(Main.luck.getUserManager().getUser(p.getUniqueId()).getPrimaryGroup());
+				if (group.getWeight().getAsInt() >= 2 && p.hasPlayedBefore()) {
+					NamespacedKey key = new NamespacedKey(Main.getPlugin(Main.class), "citizen");
+					Advancement a = Bukkit.getAdvancement(key);
+					AdvancementProgress prog = p.getAdvancementProgress(a);
+					NamespacedKey key2 = new NamespacedKey(Main.getPlugin(Main.class), "old_timer");
+					Advancement a2 = Bukkit.getAdvancement(key2);
+					AdvancementProgress prog2 = p.getAdvancementProgress(a2);
+					
+					for (String criteria : prog.getRemainingCriteria()) {
+						prog.awardCriteria(criteria);
+					}
+					config.set("oldtimer", "yes");
+					prog2.awardCriteria("manual");
+					
+				}
+				else {
+					config.set("oldtimer", "no");
+				}
+				
+		   	 	new SavingConfig(file).run();
+		   	 	
+				// Add joined player to infop ConcurrentHashMap
+				Object[] data = {config.getString("Name"), config.getInt("BlocksBroke"), config.getInt("BlocksPlace"), config.getInt("DiaBroke"), config.getInt("Time"), config.getInt("Timber"), config.get("oldtimer")};
+				DataMethods.infopPut(UUID, data);
+				
+			}
+		}.runTask(Main.getPlugin(Main.class));
+		}
+		else {
+	   	 	new SavingConfig(file).runTask(plugin);
+	   	 	
+			// Add joined player to infop ConcurrentHashMap
+			Object[] data = {config.getString("Name"), config.getInt("BlocksBroke"), config.getInt("BlocksPlace"), config.getInt("DiaBroke"), config.getInt("Time"), config.getInt("Timber"), config.get("oldtimer")};
+			DataMethods.infopPut(UUID, data);
+		}
+		
+		
+
+		
+
+
 	}
 	
 	public File getFile() {

@@ -100,7 +100,8 @@ public class DataMethods {
 		int DiaBroke = data.getDiaBroke();
 		int Time = data.getTime();
 		int trees = data.getTrees();
-		Object[] object = new Object[] {name, BlocksBroke, BlocksPlace, DiaBroke, Time, trees};
+		String oldtimer = data.getOldtimer();
+		Object[] object = new Object[] {name, BlocksBroke, BlocksPlace, DiaBroke, Time, trees, oldtimer};
 		return object;}
 		
 		public static Infop reconvert(Object[] data) {
@@ -111,7 +112,8 @@ public class DataMethods {
 		int DiaBroke = ((Integer) data[3]).intValue();
 		int Time = ((Integer) data[4]).intValue();
 		int trees = ((Integer) data[5]).intValue();
-		Infop infop = new Infop(name, BlocksBroke, BlocksPlace, DiaBroke, Time, trees);
+		String oldtimer = (String) data[6]; 
+		Infop infop = new Infop(name, BlocksBroke, BlocksPlace, DiaBroke, Time, trees, oldtimer);
 		return infop;}
 		
 }

@@ -4,6 +4,9 @@ import java.io.File;
 import java.util.Map.Entry;
 import java.util.UUID;
 
+import org.bukkit.ChatColor;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import xyz.wisecraft.autoroles.Main;
@@ -15,6 +18,13 @@ public class autosave extends BukkitRunnable {
 
 	private static Main plugin = Main.getPlugin(Main.class);
 
+	
+	private CommandSender sender;
+	
+	public autosave(CommandSender sender) {
+		this.setSender(sender);
+	}
+	
 	@Override
 	public void run() {
     	try {
@@ -27,12 +37,28 @@ public class autosave extends BukkitRunnable {
             Playerdata.saveConfig(file);
             
     		}
+    	if (sender instanceof Player) {
+    		plugin.console.sendMessage("Manuel: Data saved by " + sender.getName());
+    		sender.sendMessage(ChatColor.GREEN + "Data has been saved");
+    	}
         plugin.console.sendMessage("AutoSave");
+
     	}
         	catch (Exception e) {
         		plugin.console.sendMessage("couldn't save data due to: " + e);
         }
 		
 	}
+
+
+	public CommandSender getSender() {
+		return sender;
+	}
+
+
+	public void setSender(CommandSender sender) {
+		this.sender = sender;
+	}
+	
 
 }

@@ -7,8 +7,9 @@ public class Infop {
 	private int BlocksPlace;
 	private int Time;
 	private int trees;
+	private String oldtimer;
 	
-	public Infop(String name, int BlocksBroke, int BlocksPlace, int DiaBroke, int Time, int trees) {
+	public Infop(String name, int BlocksBroke, int BlocksPlace, int DiaBroke, int Time, int trees, String oldtimer) {
 		
 		this.setName(name);
 		this.setBlocksBroke(BlocksBroke);
@@ -16,6 +17,8 @@ public class Infop {
 		this.setDiaBroke(DiaBroke);
 		this.setTime(Time);
 		this.setTrees(trees);
+		this.setOldtimer(oldtimer);
+		
 		
 	}
 	
@@ -55,4 +58,10 @@ public class Infop {
 
 	public void setTrees(int trees) {
 		this.trees = trees;}
+
+	public String getOldtimer() {
+		return oldtimer;}
+
+	public void setOldtimer(String oldtimer) {
+		this.oldtimer = oldtimer;}
 }

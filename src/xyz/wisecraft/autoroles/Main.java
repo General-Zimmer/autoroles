@@ -7,7 +7,11 @@ import java.util.Map.Entry;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import org.bukkit.Bukkit;
+import org.bukkit.NamespacedKey;
+import org.bukkit.advancement.Advancement;
+import org.bukkit.advancement.AdvancementProgress;
 import org.bukkit.command.ConsoleCommandSender;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -29,17 +33,17 @@ public class Main extends JavaPlugin{
 	public ConcurrentHashMap<UUID, Infop> infom = new ConcurrentHashMap<UUID, Infop>(); 
 	public static ConcurrentHashMap<UUID, Timers> timers = new ConcurrentHashMap<UUID, Timers>(); 
     public ConsoleCommandSender console = getServer().getConsoleSender();
-    public LuckPerms luck;
+    public static LuckPerms luck;
     
     public void setLuck(LuckPerms luck) {
-    	this.luck = luck;}
+    	Main.luck = luck;}
     
 	//On server start
 	@Override
 	public void onEnable() {
 		this.getServer().getPluginManager().registerEvents(new ZimListeners(), this);
 		this.getServer().getPluginManager().registerEvents(new QuestEvents(), this);
-		this.getCommand("autoroles").setExecutor(new AutorolesCommand(this));
+		this.getCommand("autoroles").setExecutor(new AutorolesCommand());
 		this.getCommand("autoroles").setTabCompleter(new TabCompletion());
 		IEssentials ess = (IEssentials) this.getServer().getPluginManager().getPlugin("Essentials");
 
@@ -50,7 +54,7 @@ public class Main extends JavaPlugin{
 		}
 		
 		//Auto Save Players' configs. 
-		new autosave().runTaskTimer(Main.getPlugin(Main.class), 12000, 12000);
+		new autosave(Bukkit.getConsoleSender()).runTaskTimer(Main.getPlugin(Main.class), 12000, 12000);
 		
 		//Countdowns
 		new BukkitRunnable() {
@@ -97,28 +101,49 @@ public class Main extends JavaPlugin{
 		    }
 		}.runTaskTimerAsynchronously(Main.getPlugin(Main.class), 1200, 1200);
 	
-	
+	new BukkitRunnable() {
+		public void run() {
+			for (Player p : Bukkit.getOnlinePlayers()) {
+				NamespacedKey key = new NamespacedKey(Main.getPlugin(Main.class), "citizen");
+				Advancement a = Bukkit.getAdvancement(key);
+				AdvancementProgress prog = p.getAdvancementProgress(a);
+				Infop data = infom.get(p.getUniqueId());
+				
+				if (data.getTime() <= 60 & !prog.isDone()) {
+
+					
+					new BukkitRunnable() {
+						public void run() {
+							prog.awardCriteria("citizen");
+						}
+					}.runTaskLater(Main.getPlugin(Main.class), 24000);
+					
+				}
+				
+			}
+			
+			
+		}
+	}.runTaskTimerAsynchronously(Main.getPlugin(Main.class), 12000, 12000);
 	}
 	
 	
 	//On server close
 	@Override
 	public void onDisable() { 
-		//Save player data and close thread pool
-    	try {
+    	
     	for (Entry<UUID, Infop> entry : infom.entrySet()) {
+    		try {
     		UUID UUID = entry.getKey();
     		String uuid = UUID.toString();
     		File file = Playerdata.getFile(uuid);
     		Object[] data = DataMethods.convert(entry.getValue());
     		Playerdata.set(uuid, file, data);
             Playerdata.saveConfig(file);
-            
     		}
-        this.console.sendMessage("AutoSave");
+    	catch (Exception e) {
+    		this.console.sendMessage("couldn't save data due to: " + e);
     	}
-        	catch (Exception e) {
-        		this.console.sendMessage("couldn't save data due to: " + e);
         }
     	
     	}

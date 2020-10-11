@@ -35,7 +35,6 @@ public class ZimListeners implements Listener {
 		String name = p.getName();
 		BukkitRunnable r1 = new joined(name, UUID, file);
 		r1.runTaskAsynchronously(plugin);
-		
 		}
 	
 	
