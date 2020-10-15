@@ -41,7 +41,6 @@ public class autosave extends BukkitRunnable {
     		plugin.console.sendMessage("Manuel: Data saved by " + sender.getName());
     		sender.sendMessage(ChatColor.GREEN + "Data has been saved");
     	}
-        plugin.console.sendMessage("AutoSave");
 
     	}
         	catch (Exception e) {
