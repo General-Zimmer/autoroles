@@ -18,6 +18,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import com.earth2me.essentials.IEssentials;
 
 import net.luckperms.api.LuckPerms;
+import net.luckperms.api.model.user.User;
 import xyz.wisecraft.autoroles.data.DataMethods;
 import xyz.wisecraft.autoroles.data.Infop;
 import xyz.wisecraft.autoroles.data.Playerdata;
@@ -104,19 +105,19 @@ public class Main extends JavaPlugin{
 	new BukkitRunnable() {
 		public void run() {
 			for (Player p : Bukkit.getOnlinePlayers()) {
+				if (!infom.contains(p.getUniqueId())) return;
+				
 				NamespacedKey key = new NamespacedKey(Main.getPlugin(Main.class), "citizen");
 				Advancement a = Bukkit.getAdvancement(key);
 				AdvancementProgress prog = p.getAdvancementProgress(a);
 				Infop data = infom.get(p.getUniqueId());
 				
-				if (data.getTime() <= 60 & !prog.isDone()) {
-
+				if (data.getTime() >= 60 & !prog.isDone()) {
 					
-					new BukkitRunnable() {
-						public void run() {
-							prog.awardCriteria("citizen");
-						}
-					}.runTaskLater(Main.getPlugin(Main.class), 24000);
+					prog.awardCriteria("citizen");
+					User user = luck.getUserManager().getUser(p.getUniqueId());
+					user.setPrimaryGroup("citizen");
+
 					
 				}
 				
@@ -124,7 +125,7 @@ public class Main extends JavaPlugin{
 			
 			
 		}
-	}.runTaskTimerAsynchronously(Main.getPlugin(Main.class), 12000, 12000);
+	}.runTaskTimer(Main.getPlugin(Main.class), 72000, 36000);
 	}
 	
 	

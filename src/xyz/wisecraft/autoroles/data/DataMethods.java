@@ -12,10 +12,6 @@ public class DataMethods {
 
 	private static Main plugin = Main.getPlugin(Main.class);
 	
-	public static int add1(int v) {
-		int v2 = v+1;
-		return v2;
-	}
 	
 	public static void  infopPut (UUID UUID, Object[] data) {
 		
