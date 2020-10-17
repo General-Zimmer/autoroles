@@ -126,7 +126,7 @@ public class Main extends JavaPlugin{
 			
 			
 		}
-	}.runTaskTimer(Main.getPlugin(Main.class), 72000, 36000);
+	}.runTaskTimer(Main.getPlugin(Main.class), 36000, 36000);
 	}
 	
 	
