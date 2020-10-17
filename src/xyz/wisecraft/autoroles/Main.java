@@ -104,11 +104,12 @@ public class Main extends JavaPlugin{
 	
 	new BukkitRunnable() {
 		public void run() {
+			NamespacedKey key = new NamespacedKey(Main.getPlugin(Main.class), "citizen");
+			Advancement a = Bukkit.getAdvancement(key);
 			for (Player p : Bukkit.getOnlinePlayers()) {
-				if (!infom.contains(p.getUniqueId())) return;
+				if (!infom.contains(p.getUniqueId())) continue;
 				
-				NamespacedKey key = new NamespacedKey(Main.getPlugin(Main.class), "citizen");
-				Advancement a = Bukkit.getAdvancement(key);
+
 				AdvancementProgress prog = p.getAdvancementProgress(a);
 				Infop data = infom.get(p.getUniqueId());
 				
