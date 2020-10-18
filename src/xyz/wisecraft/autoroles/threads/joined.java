@@ -73,7 +73,7 @@ public class joined extends BukkitRunnable {
 
 		// Check if the name in the config is the same as the player's current name, if not, correct it. 
 		FileConfiguration config = Playerdata.getConfig(file, uuid); 	
-		if (config.getString("Name").equals(name)) {
+		if (!config.getString("Name").equals(name)) {
     		config.set("Name", name);
 		}
 		

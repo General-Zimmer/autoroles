@@ -20,6 +20,7 @@ public class TabCompletion implements TabCompleter{
 		    if (sender.hasPermission("autoroles.manage")) {
 		    	cmds.add("save");
 		    	cmds.add("load");
+		    	cmds.add("rank");
 		    }
 		    return StringUtil.copyPartialMatches(args[0], cmds, new ArrayList<String>());
 		   

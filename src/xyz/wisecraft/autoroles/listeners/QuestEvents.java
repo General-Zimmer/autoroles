@@ -11,7 +11,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.player.PlayerAdvancementDoneEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import com.songoda.ultimatetimber.events.TreeFellEvent;
 
@@ -90,7 +92,17 @@ public class QuestEvents implements Listener {
 		
 		}
 
-	
+	@EventHandler
+	public void citizen(PlayerAdvancementDoneEvent e) {
+			new BukkitRunnable() {
+				public void run() {
+					NamespacedKey key = new NamespacedKey(Main.getPlugin(Main.class), "citizen");
+					
+					if (key.getKey().equals(e.getAdvancement().getKey().getKey())) 
+						Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + e.getPlayer().getName() + " parent add citizen");
+				}
+			}.runTask(Main.getPlugin(Main.class));
+	}
 	
 	@EventHandler
 	public void FlyTimer(PlayerClaimBorderEvent e) {
@@ -131,10 +143,10 @@ public class QuestEvents implements Listener {
 		}
 		
 		if (!timers.containsKey(UUID)) {
-			timers.put(UUID, new Timers(0, 3));
+			timers.put(UUID, new Timers(0, 6));
 		}
 		else {
-			timers.get(UUID).setTree(3);
+			timers.get(UUID).setTree(6);
 		}
 		
 	}

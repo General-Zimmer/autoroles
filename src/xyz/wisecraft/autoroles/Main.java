@@ -18,7 +18,6 @@ import org.bukkit.scheduler.BukkitRunnable;
 import com.earth2me.essentials.IEssentials;
 
 import net.luckperms.api.LuckPerms;
-import net.luckperms.api.model.user.User;
 import xyz.wisecraft.autoroles.data.DataMethods;
 import xyz.wisecraft.autoroles.data.Infop;
 import xyz.wisecraft.autoroles.data.Playerdata;
@@ -26,6 +25,7 @@ import xyz.wisecraft.autoroles.data.Timers;
 import xyz.wisecraft.autoroles.listeners.QuestEvents;
 import xyz.wisecraft.autoroles.listeners.ZimListeners;
 import xyz.wisecraft.autoroles.threads.autosave;
+import xyz.wisecraft.autoroles.threads.joined;
 
 
 public class Main extends JavaPlugin{
@@ -53,6 +53,18 @@ public class Main extends JavaPlugin{
 		    LuckPerms api = provider.getProvider();
 		    setLuck(api);
 		}
+		
+		new BukkitRunnable() {
+			public void run() {
+				for (Player p : Bukkit.getOnlinePlayers()) {
+		UUID UUID = p.getUniqueId();
+		File file = Playerdata.getFile(UUID.toString());
+		String name = p.getName();
+		BukkitRunnable r1 = new joined(name, UUID, file);
+		r1.runTaskAsynchronously(Main.getPlugin(Main.class));
+				}
+			}
+		}.runTask(Main.getPlugin(Main.class));
 		
 		//Auto Save Players' configs. 
 		new autosave(Bukkit.getConsoleSender()).runTaskTimer(Main.getPlugin(Main.class), 12000, 12000);
@@ -102,31 +114,25 @@ public class Main extends JavaPlugin{
 		    }
 		}.runTaskTimerAsynchronously(Main.getPlugin(Main.class), 1200, 1200);
 	
-	new BukkitRunnable() {
-		public void run() {
-			NamespacedKey key = new NamespacedKey(Main.getPlugin(Main.class), "citizen");
-			Advancement a = Bukkit.getAdvancement(key);
-			for (Player p : Bukkit.getOnlinePlayers()) {
-				if (!infom.contains(p.getUniqueId())) continue;
+		
+		new BukkitRunnable() {
+			public void run() {
+				NamespacedKey key = new NamespacedKey(Main.getPlugin(Main.class), "citizen");
+				Advancement a = Bukkit.getAdvancement(key);
 				
-
-				AdvancementProgress prog = p.getAdvancementProgress(a);
-				Infop data = infom.get(p.getUniqueId());
 				
-				if (data.getTime() >= 60 & !prog.isDone()) {
+				for (Player p : Bukkit.getOnlinePlayers()) {
 					
-					prog.awardCriteria("citizen");
-					User user = luck.getUserManager().getUser(p.getUniqueId());
-					user.setPrimaryGroup("citizen");
-
+					AdvancementProgress prog = p.getAdvancementProgress(a);
+					Infop data = infom.get(p.getUniqueId());
+					
+					if (!prog.isDone() && (data.getTime() >= 120)) 
+						prog.awardCriteria("citizen");
 					
 				}
-				
 			}
-			
-			
-		}
-	}.runTaskTimer(Main.getPlugin(Main.class), 36000, 36000);
+		}.runTaskTimer(Main.getPlugin(Main.class), 36000, 36000);
+	
 	}
 	
 	
