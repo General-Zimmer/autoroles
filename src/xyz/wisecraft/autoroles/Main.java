@@ -35,9 +35,8 @@ public class Main extends JavaPlugin{
 	public static ConcurrentHashMap<UUID, Timers> timers = new ConcurrentHashMap<UUID, Timers>(); 
     public ConsoleCommandSender console = getServer().getConsoleSender();
     public static LuckPerms luck;
+    public static IEssentials ess;
     
-    public void setLuck(LuckPerms luck) {
-    	Main.luck = luck;}
     
 	//On server start
 	@Override
@@ -47,11 +46,13 @@ public class Main extends JavaPlugin{
 		this.getCommand("autoroles").setExecutor(new AutorolesCommand());
 		this.getCommand("autoroles").setTabCompleter(new TabCompletion());
 		IEssentials ess = (IEssentials) this.getServer().getPluginManager().getPlugin("Essentials");
-
+		Main.ess = ess;
+		
+		
 		RegisteredServiceProvider<LuckPerms> provider = Bukkit.getServicesManager().getRegistration(LuckPerms.class);
 		if (provider != null) {
 		    LuckPerms api = provider.getProvider();
-		    setLuck(api);
+		    Main.luck = api;
 		}
 		
 		new BukkitRunnable() {
@@ -114,7 +115,7 @@ public class Main extends JavaPlugin{
 		    }
 		}.runTaskTimerAsynchronously(Main.getPlugin(Main.class), 1200, 1200);
 	
-		
+		// Give criterias
 		new BukkitRunnable() {
 			public void run() {
 				NamespacedKey key = new NamespacedKey(Main.getPlugin(Main.class), "citizen");

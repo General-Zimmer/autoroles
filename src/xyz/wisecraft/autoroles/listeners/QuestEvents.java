@@ -96,10 +96,32 @@ public class QuestEvents implements Listener {
 	public void citizen(PlayerAdvancementDoneEvent e) {
 			new BukkitRunnable() {
 				public void run() {
-					NamespacedKey key = new NamespacedKey(Main.getPlugin(Main.class), "citizen");
+					//Citizen
+					NamespacedKey citKey = new NamespacedKey(Main.getPlugin(Main.class), "citizen");
+					Advancement citA = Bukkit.getAdvancement(citKey);
+					String citizen = citA.getKey().getKey();
+					String event = e.getAdvancement().getKey().getKey();
 					
-					if (key.getKey().equals(e.getAdvancement().getKey().getKey())) 
+					if (citizen.equals(event))
 						Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + e.getPlayer().getName() + " parent add citizen");
+					
+					
+					//Iron stash
+					NamespacedKey ironKey = new NamespacedKey(Main.getPlugin(Main.class), "hidden_iron");
+					Advancement ironA = Bukkit.getAdvancement(ironKey);
+					String iron = ironA.getKey().getKey();
+					if (iron.equals(event)) {
+						Player p = e.getPlayer();
+						
+						Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "minecraft:give " + p.getName() + " iron_ore 6");
+						Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "minecraft:give " + p.getName() + " minecraft:iron_ingot 3");
+						
+					}
+						
+						
+					
+						
+						
 				}
 			}.runTask(Main.getPlugin(Main.class));
 	}
