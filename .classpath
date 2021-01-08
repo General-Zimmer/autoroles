@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="lib" path="C:/Users/Bruger/Minecraft server/plugins/LuckPerms-Bukkit-5.1.26.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Bruger/Minecraft server/plugins/GriefPreventionFlags-5.9.2.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Bruger/Minecraft server/plugins/UltimateTimber-2.0.9.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Bruger/Minecraft server/plugins/EssentialsX-2.18.1.0.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Bruger/Downloads/Paper-1.16.3-latest.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Bruger/Minecraft server/BuildTools/Spigot/Spigot-API/target/spigot-api-1.16.4-R0.1-SNAPSHOT-shaded.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

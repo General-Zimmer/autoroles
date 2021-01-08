@@ -150,7 +150,6 @@ public class QuestEvents implements Listener {
 		AdvancementProgress prog = p.getAdvancementProgress(a); 
 		if (!prog.isDone())
 			prog.awardCriteria("tree");
-
 		
 		
 		int trees = plugin.infom.get(UUID).getTrees();
@@ -162,6 +161,14 @@ public class QuestEvents implements Listener {
 			AdvancementProgress prog2 = p.getAdvancementProgress(a2); 
 			if (!prog2.isDone())
 				prog.awardCriteria("tree1000");
+			
+		}
+		if (trees+1 > 4999) {
+			NamespacedKey key2 = new NamespacedKey(plugin, "juggerjack");
+			Advancement a2 = Bukkit.getAdvancement(key2);
+			AdvancementProgress prog2 = p.getAdvancementProgress(a2); 
+			if (!prog2.isDone())
+				prog.awardCriteria("tree5000");
 		}
 		
 		if (!timers.containsKey(UUID)) {
@@ -170,7 +177,5 @@ public class QuestEvents implements Listener {
 		else {
 			timers.get(UUID).setTree(6);
 		}
-		
 	}
-	
 }
