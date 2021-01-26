@@ -1,0 +1,6 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="autoroles:jar">
+    <output-path>$USER_HOME$/WiseCraft/test server/plugins</output-path>
+    <root id="archive" name="autoroles.jar" />
+  </artifact>
+</component>
